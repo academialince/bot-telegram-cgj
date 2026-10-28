@@ -23,16 +23,23 @@ jobs:
         with:
           python-version: "3.12"
 
+      - name: Ver archivos del repositorio
+        run: find . -not -path "./.git/*" -type f | sort
+
       - name: Publicar pregunta
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        run: python publicar.py
+        run: |
+          SCRIPT=$(find . -name "publicar.py" -not -path "./.git/*" | head -1)
+          if [ -z "$SCRIPT" ]; then echo "No encuentro publicar.py en el repositorio (mira la lista de arriba)"; exit 1; fi
+          echo "Usando $SCRIPT"
+          python "$SCRIPT"
 
       - name: Guardar estado
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add estado.json
+          git add -A
           git diff --cached --quiet || git commit -m "Pregunta publicada $(date -u +'%Y-%m-%d %H:%M')"
           git push
