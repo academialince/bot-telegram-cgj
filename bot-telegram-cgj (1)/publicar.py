@@ -1,98 +1,132 @@
-"""Ajuste de preguntas a los límites de las encuestas tipo quiz de Telegram.
+#!/usr/bin/env python3
+"""Publica UNA pregunta tipo quiz en Telegram y avanza la rotación de temas.
 
-Límites (Bot API, sendPoll): pregunta 1-300 caracteres, opciones 1-100, explicación 0-200.
+GitHub Actions lo ejecuta dos veces al día (ver .github/workflows/publicar.yml).
+
+Uso:
+  python publicar.py              publica la siguiente pregunta (necesita TELEGRAM_BOT_TOKEN y TELEGRAM_CHAT_ID)
+  python publicar.py --prueba     muestra lo que publicaría, sin enviar nada ni tocar estado.json
 """
-import csv, re, hashlib
+import glob, html, json, os, random, sys, urllib.request, urllib.error
+from datetime import datetime, timezone
+import formato as F
 
-MAX_PREGUNTA, MAX_OPCION, MAX_EXPLICACION = 300, 100, 200
-# Margen para la cabecera del tema (emoji + nombre): el enunciado se ajusta a 280.
-MARGEN_CABECERA = 20
-MAX_ENUNCIADO = MAX_PREGUNTA - MARGEN_CABECERA
-COLUMNAS = ["enunciado", "opcion_a", "opcion_b", "opcion_c", "opcion_d", "respuesta_correcta", "explicacion"]
+BASE = os.path.dirname(os.path.abspath(__file__))
+RUTA_CONFIG = os.path.join(BASE, "config.json")
+RUTA_ESTADO = os.path.join(BASE, "estado.json")
+LETRAS = "ABCD"
 
-# Abreviaturas que solo se aplican si el texto no cabe, de la más larga a la más corta.
-ABREVIATURAS = [
-    (r"Convenio Europeo para la [Pp]rotección de los [Dd]erechos [Hh]umanos y de las [Ll]ibertades [Ff]undamentales", "CEDH"),
-    (r"Pacto Internacional de Derechos Económicos, Sociales y Culturales", "PIDESC"),
-    (r"Pacto Internacional de Derechos Civiles y Políticos", "PIDCP"),
-    (r"Declaración Universal de (los )?Derechos Humanos", "DUDH"),
-    (r"Ley del Procedimiento Administrativo Común de las Administraciones Públicas", "Ley 39/2015"),
-    (r"Ley Orgánica 3/2007,? (de 22 de marzo, )?para la igualdad efectiva de mujeres y hombres", "LO 3/2007"),
-    (r"Ley Orgánica 2/1986,? (de 13 de marzo, )?de Fuerzas y Cuerpos de Seguridad", "LO 2/1986"),
-    (r"Código de Conducta( del personal de la Guardia Civil)? \(RD 176/2022\)", "RD 176/2022"),
-    (r"Tribunal Europeo de Derechos Humanos", "TEDH"),
-    (r"Cuerpo Nacional de Policía", "CNP"),
-    (r"Juzgado de Violencia sobre la Mujer", "Juzgado de VSM"),
-    (r"Audiencia Nacional", "AN"),
-    (r"Fuerzas y Cuerpos de Seguridad del Estado", "FCSE"),
-    (r"Fuerzas y Cuerpos de Seguridad", "FCS"),
-    (r"Ley de Enjuiciamiento Criminal", "LECrim"),
-    (r"Carta Social Europea( \((ratificada|revisada)\))?", "CSE"),
-    (r"Constitución [Ee]spañola", "CE"),
-    (r"Administraciones [Pp]úblicas", "AA. PP."),
-    (r"Administración [Pp]ública", "Admón. pública"),
-    (r"Comunidades Autónomas", "CC. AA."),
-    (r"Comunidad Autónoma", "C. A."),
-    (r"Tribunal Constitucional", "TC"),
-    (r"Naciones Unidas", "NN. UU."),
-    (r"Ley Orgánica", "LO"),
-    (r"Real Decreto", "RD"),
-    (r"Código Civil", "C. Civil"),
-    (r"Código Penal", "C. Penal"),
-    (r"Guardia Civil", "GC"),
-    (r"\bartículos\b", "arts."),
-    (r"\bartículo\b", "art."),
-    (r"\bapartado\b", "apdo."),
-]
 
-def tlen(t):
-    """Longitud tal como la cuenta Telegram (unidades UTF-16: un emoji suele contar 2)."""
-    return len(t.encode("utf-16-le")) // 2
+def cargar_json(ruta, defecto):
+    try:
+        with open(ruta, encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return defecto
 
-def limpiar(t):
-    return re.sub(r"\s+", " ", (t or "").replace("\ufeff", "")).strip()
 
-def abreviar(t, limite):
-    """Aplica abreviaturas una a una hasta que el texto cabe (o se acaban)."""
-    t = limpiar(t)
-    for patron, corto in ABREVIATURAS:
-        if tlen(t) <= limite:
-            break
-        t = re.sub(patron, corto, t)
-    return t
+def guardar_estado(estado):
+    with open(RUTA_ESTADO, "w", encoding="utf-8") as f:
+        json.dump(estado, f, ensure_ascii=False, indent=1)
+        f.write("\n")
 
-def _recortar(t, limite):
-    """Recorta en el último límite natural (';', ':', ',', espacio) fuera de paréntesis y añade «…»."""
-    if tlen(t) <= limite:
-        return t
-    limite -= tlen(t) - len(t)  # margen si hay emojis
-    trozo = t[: limite - 1]
-    for sep in ("; ", ": ", ", ", " "):
-        k = len(trozo)
-        while True:
-            k = trozo.rfind(sep, 0, k)
-            if k <= limite * 0.45:
-                break
-            if trozo[:k].count("(") <= trozo[:k].count(")") and not re.search(r"\b(art|arts|apdo|n\.º)\.?$", trozo[:k]):
-                return _sin_cola(trozo[:k]) + "…"
-    return _sin_cola(trozo) + "…"
 
-_VACIAS = {"de", "del", "la", "las", "el", "los", "lo", "y", "e", "o", "u", "a", "al", "en", "que", "con", "por",
-           "para", "un", "una", "unos", "unas", "su", "sus", "se", "sin", "como", "cuando", "si", "ni"}
+def telegram(metodo, datos):
+    token = os.environ["TELEGRAM_BOT_TOKEN"]
+    req = urllib.request.Request(
+        f"https://api.telegram.org/bot{token}/{metodo}",
+        data=json.dumps(datos).encode("utf-8"),
+        headers={"Content-Type": "application/json"})
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            resp = json.load(r)
+    except urllib.error.HTTPError as e:
+        raise SystemExit(f"Telegram rechazó {metodo}: {e.read().decode('utf-8', 'replace')}")
+    if not resp.get("ok"):
+        raise SystemExit(f"Telegram rechazó {metodo}: {resp}")
+    return resp["result"]
 
-def _sin_cola(t):
-    """Quita palabras vacías y signos colgando al final de un recorte."""
-    t = t.rstrip(" ,;:")
-    while True:
-        partes = t.rsplit(" ", 1)
-        if len(partes) == 2 and partes[1].lower() in _VACIAS:
-            t = partes[0].rstrip(" ,;:")
-        else:
-            return t
 
-def ajustar_explicacion(t, limite=MAX_EXPLICACION):
-    t = limpiar(t)
-    etiqueta = ""
-    m = re.search(r"Pregunta oficial del examen del Colegio de Guardias Jóvenes de (\d{4}) \(Modelo A, (?:pregunta de reserva|pregunta) n\.º (\d+)\)\.?", t)
-    if m:
-        etiqueta = f"📌 Examen oficial CGJ
+def buscar_csv(archivo):
+    """Busca el CSV en su ruta y, si no está, en cualquier carpeta del repositorio."""
+    ruta = os.path.join(BASE, archivo)
+    if os.path.exists(ruta):
+        return ruta
+    encontrados = glob.glob(os.path.join(BASE, "**", os.path.basename(archivo)), recursive=True)
+    return encontrados[0] if encontrados else None
+
+
+def elegir(config, estado):
+    """Siguiente tema de la rotación con preguntas disponibles y una pregunta aún no publicada de ese tema."""
+    rot = config["rotacion"]
+    for salto in range(len(rot)):
+        i = (estado.get("indice", 0) + salto) % len(rot)
+        tema = rot[i]
+        ruta = buscar_csv(tema["archivo"])
+        if not ruta:
+            continue  # aún no se ha subido ese CSV: se salta
+        preguntas = [F.ajustar_pregunta(p) for p in F.leer_csv(ruta)]
+        if not preguntas:
+            continue
+        usadas = set(estado.setdefault("usadas", {}).get(tema["archivo"], []))
+        libres = [q for q in preguntas if F.id_pregunta(q) not in usadas]
+        if not libres:  # tema agotado: vuelve a empezar
+            estado["usadas"][tema["archivo"]] = []
+            libres = preguntas
+        return i, tema, random.choice(libres)
+    raise SystemExit("No hay ningún CSV con preguntas en la carpeta data/.")
+
+
+def publicar(chat_id, tema, q, anonima, prueba=False):
+    cabecera = f"{tema['emoji']} {tema['nombre']}"
+    opciones = [q[f"opcion_{l.lower()}"] for l in LETRAS]
+    correcta = LETRAS.index(q["respuesta_correcta"])
+    encuesta = {"chat_id": chat_id, "type": "quiz", "is_anonymous": anonima,
+                "correct_option_id": correcta, "explanation": q["explicacion"]}
+    mensajes = []
+    if F.cabe_como_quiz(q):
+        pregunta = f"{cabecera}\n\n{q['enunciado']}"
+        encuesta["question"] = pregunta if F.tlen(pregunta) <= F.MAX_PREGUNTA else q["enunciado"]
+        encuesta["options"] = [{"text": o} for o in opciones]
+    else:
+        # Modo letras: el texto completo va en un mensaje y la encuesta solo lleva A, B, C, D.
+        texto = (f"<b>{html.escape(cabecera)}</b>\n\n{html.escape(q['enunciado'])}\n\n"
+                 + "\n".join(f"<b>{l})</b> {html.escape(o)}" for l, o in zip(LETRAS, opciones)))
+        mensajes.append({"chat_id": chat_id, "text": texto, "parse_mode": "HTML"})
+        encuesta["question"] = "\U0001F446 ¿Cuál es la respuesta correcta?"
+        encuesta["options"] = [{"text": l} for l in LETRAS]
+    if not encuesta["explanation"]:
+        del encuesta["explanation"]
+    if prueba:
+        for m in mensajes:
+            print("MENSAJE:\n" + m["text"] + "\n")
+        print("ENCUESTA:", json.dumps({k: v for k, v in encuesta.items() if k != "chat_id"}, ensure_ascii=False, indent=1))
+        return
+    for m in mensajes:
+        telegram("sendMessage", m)
+    telegram("sendPoll", encuesta)
+
+
+def main():
+    prueba = "--prueba" in sys.argv
+    config = cargar_json(RUTA_CONFIG, None)
+    estado = cargar_json(RUTA_ESTADO, {"indice": 0, "usadas": {}, "historial": []})
+    i, tema, q = elegir(config, estado)
+    chat_id = os.environ.get("TELEGRAM_CHAT_ID", "")
+    if not prueba and not chat_id:
+        raise SystemExit("Falta la variable TELEGRAM_CHAT_ID.")
+    publicar(chat_id, tema, q, config.get("encuesta_anonima", True), prueba)
+    if prueba:
+        return
+    pid = F.id_pregunta(q)
+    estado["usadas"].setdefault(tema["archivo"], []).append(pid)
+    estado["indice"] = (i + 1) % len(config["rotacion"])
+    estado.setdefault("historial", []).append(
+        {"fecha": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M"), "tema": tema["nombre"], "id": pid})
+    estado["historial"] = estado["historial"][-60:]
+    guardar_estado(estado)
+    print(f"Publicada: {tema['nombre']} · {q['enunciado'][:80]}")
+
+
+if __name__ == "__main__":
+    main()

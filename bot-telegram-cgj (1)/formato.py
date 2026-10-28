@@ -96,14 +96,14 @@ def ajustar_explicacion(t, limite=MAX_EXPLICACION):
     # Pregunta oficial: «… Pregunta oficial del examen del Colegio de Guardias Jóvenes de 2024 (Modelo A, pregunta n.º 12).»
     m = re.search(r"Pregunta oficial del examen del Colegio de Guardias Jóvenes de (\d{4}) \(Modelo A, (?:pregunta de reserva|pregunta) n\.º (\d+)\)\.?", t)
     if m:
-        etiqueta = f"📌 Examen oficial CGJ {m.group(1)}, n.º {m.group(2)}."
+        etiqueta = f"\U0001F4CC Examen oficial CGJ {m.group(1)}, n.º {m.group(2)}."
         t = t[: m.start()].strip()
         t = re.sub(r":\s*respuesta correcta «.*?»\.?$", ".", t)  # la respuesta ya se ve en la encuesta
     m = re.search(r"Preguntado en (?:el )?examen[^:]*:\s*([^.]*)\.?", t)
     if m:
         anos = ", ".join(re.findall(r"20\d\d", m.group(1)))
         if anos:
-            etiqueta = f"📌 Cayó en CGJ {anos}."
+            etiqueta = f"\U0001F4CC Cayó en CGJ {anos}."
         t = (t[: m.start()] + t[m.end():]).strip()
     disponible = limite - (tlen(etiqueta) + 1 if etiqueta else 0)
     if tlen(t) > disponible:
