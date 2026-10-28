@@ -1,8 +1,11 @@
 {
- "indice": 1,
+ "indice": 3,
  "usadas": {
   "data/tema03_constitucional.csv": [
    "80f2828c15cd"
+  ],
+  "data/tema01_derechos_humanos.csv": [
+   "fd78b4243e1e"
   ]
  },
  "historial": [
@@ -10,6 +13,11 @@
    "fecha": "2026-10-28 10:43",
    "tema": "Derecho Constitucional",
    "id": "80f2828c15cd"
+  },
+  {
+   "fecha": "2026-10-28 10:49",
+   "tema": "Derechos Humanos",
+   "id": "fd78b4243e1e"
   }
  ]
 }
