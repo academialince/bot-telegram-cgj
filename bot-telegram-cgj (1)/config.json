@@ -2,7 +2,6 @@
   "encuesta_anonima": true,
   "rotacion": [
     {"archivo": "data/tema03_constitucional.csv",   "nombre": "Derecho Constitucional",           "emoji": "⚖️"},
-    {"archivo": "data/ortografia.csv",              "nombre": "Ortografía",                       "emoji": "✍️"},
     {"archivo": "data/tema01_derechos_humanos.csv", "nombre": "Derechos Humanos",                 "emoji": "🌍"},
     {"archivo": "data/ingles.csv",                  "nombre": "Inglés",                           "emoji": "🇬🇧"},
     {"archivo": "data/tema08_guardia_civil.csv",    "nombre": "Fuerzas y Cuerpos de Seguridad. Guardia Civil", "emoji": "🛡️"},
