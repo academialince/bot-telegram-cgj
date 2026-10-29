@@ -1,5 +1,5 @@
 {
- "indice": 8,
+ "indice": 9,
  "usadas": {
   "data/tema03_constitucional.csv": [
    "80f2828c15cd"
@@ -18,6 +18,9 @@
   ],
   "data/tema02_igualdad.csv": [
    "484c89cd1053"
+  ],
+  "data/tema06_procesal_penal.csv": [
+   "0ddf4cbdcee9"
   ]
  },
  "historial": [
@@ -50,6 +53,11 @@
    "fecha": "2026-10-29 15:02",
    "tema": "Igualdad efectiva de mujeres y hombres",
    "id": "484c89cd1053"
+  },
+  {
+   "fecha": "2026-10-29 17:30",
+   "tema": "Derecho Procesal Penal",
+   "id": "0ddf4cbdcee9"
   }
  ]
 }
