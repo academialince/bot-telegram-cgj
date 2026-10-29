@@ -1,5 +1,5 @@
 {
- "indice": 7,
+ "indice": 8,
  "usadas": {
   "data/tema03_constitucional.csv": [
    "80f2828c15cd"
@@ -15,6 +15,9 @@
   ],
   "data/tema07_administrativo.csv": [
    "6dbcf095c511"
+  ],
+  "data/tema02_igualdad.csv": [
+   "484c89cd1053"
   ]
  },
  "historial": [
@@ -42,6 +45,11 @@
    "fecha": "2026-10-29 08:30",
    "tema": "Derecho Administrativo",
    "id": "6dbcf095c511"
+  },
+  {
+   "fecha": "2026-10-29 15:02",
+   "tema": "Igualdad efectiva de mujeres y hombres",
+   "id": "484c89cd1053"
   }
  ]
 }
