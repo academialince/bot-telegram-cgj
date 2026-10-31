@@ -1,5 +1,5 @@
 {
- "indice": 4,
+ "indice": 6,
  "usadas": {
   "data/tema03_constitucional.csv": [
    "80f2828c15cd",
@@ -14,7 +14,8 @@
    "3cdb61ca1eea"
   ],
   "data/tema04_civil.csv": [
-   "a9dbdac0cc0c"
+   "a9dbdac0cc0c",
+   "be009e796f67"
   ],
   "data/tema07_administrativo.csv": [
    "6dbcf095c511"
@@ -100,6 +101,11 @@
    "fecha": "2026-10-31 08:30",
    "tema": "Fuerzas y Cuerpos de Seguridad. Guardia Civil",
    "id": "3cdb61ca1eea"
+  },
+  {
+   "fecha": "2026-10-31 14:24",
+   "tema": "Derecho Civil",
+   "id": "be009e796f67"
   }
  ]
 }
