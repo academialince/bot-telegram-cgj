@@ -1,5 +1,5 @@
 {
- "indice": 11,
+ "indice": 0,
  "usadas": {
   "data/tema03_constitucional.csv": [
    "80f2828c15cd",
@@ -38,7 +38,8 @@
    "77bf62e24bff"
   ],
   "data/tema10_topografia.csv": [
-   "801ad1a971bf"
+   "801ad1a971bf",
+   "701fd6589081"
   ]
  },
  "historial": [
@@ -136,6 +137,11 @@
    "fecha": "2026-11-01 17:30",
    "tema": "Derecho Penal",
    "id": "77bf62e24bff"
+  },
+  {
+   "fecha": "2026-11-01 22:35",
+   "tema": "Topografía",
+   "id": "701fd6589081"
   }
  ]
 }
