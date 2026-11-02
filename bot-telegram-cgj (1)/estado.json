@@ -1,9 +1,10 @@
 {
- "indice": 0,
+ "indice": 1,
  "usadas": {
   "data/tema03_constitucional.csv": [
    "80f2828c15cd",
-   "94eb05e42c7d"
+   "94eb05e42c7d",
+   "6dfac0835f47"
   ],
   "data/tema01_derechos_humanos.csv": [
    "fd78b4243e1e",
@@ -142,6 +143,11 @@
    "fecha": "2026-11-01 22:35",
    "tema": "Topografía",
    "id": "701fd6589081"
+  },
+  {
+   "fecha": "2026-11-02 08:30",
+   "tema": "Derecho Constitucional",
+   "id": "6dfac0835f47"
   }
  ]
 }
