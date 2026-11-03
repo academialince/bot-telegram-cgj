@@ -1,5 +1,5 @@
 {
- "indice": 9,
+ "indice": 10,
  "usadas": {
   "data/tema03_constitucional.csv": [
    "80f2828c15cd",
@@ -38,7 +38,8 @@
   ],
   "data/tema09_deontologia.csv": [
    "7d03e96dcd6e",
-   "86ecbe5db5fe"
+   "86ecbe5db5fe",
+   "43cc68e2c736"
   ],
   "data/tema05_penal.csv": [
    "0c6110f327df",
@@ -184,6 +185,11 @@
    "fecha": "2026-11-03 17:30",
    "tema": "Derecho Procesal Penal",
    "id": "caf7f1042b99"
+  },
+  {
+   "fecha": "2026-11-03 23:51",
+   "tema": "Deontología profesional",
+   "id": "43cc68e2c736"
   }
  ]
 }
