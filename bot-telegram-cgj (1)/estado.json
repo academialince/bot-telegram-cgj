@@ -1,5 +1,5 @@
 {
- "indice": 1,
+ "indice": 2,
  "usadas": {
   "data/tema03_constitucional.csv": [
    "80f2828c15cd",
@@ -12,7 +12,8 @@
    "fd78b4243e1e",
    "ff7f9c111674",
    "9d1063133b24",
-   "ebabd1968fbd"
+   "ebabd1968fbd",
+   "80d8307a335f"
   ],
   "data/tema08_guardia_civil.csv": [
    "0bf7b3edd1ba",
@@ -268,6 +269,11 @@
    "fecha": "2026-11-07 08:30",
    "tema": "Derecho Constitucional",
    "id": "16f79dd6ae24"
+  },
+  {
+   "fecha": "2026-11-07 17:30",
+   "tema": "Derechos Humanos",
+   "id": "80d8307a335f"
   }
  ]
 }
