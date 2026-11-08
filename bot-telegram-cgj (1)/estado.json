@@ -1,5 +1,5 @@
 {
- "indice": 6,
+ "indice": 7,
  "usadas": {
   "data/tema03_constitucional.csv": [
    "80f2828c15cd",
@@ -33,7 +33,8 @@
    "6dbcf095c511",
    "ebff1bce8cd2",
    "076d0bea2c55",
-   "38d235f027dc"
+   "38d235f027dc",
+   "08fc3805a4ee"
   ],
   "data/tema02_igualdad.csv": [
    "484c89cd1053",
@@ -286,6 +287,11 @@
    "fecha": "2026-11-08 08:30",
    "tema": "Derecho Civil",
    "id": "d335b0954b91"
+  },
+  {
+   "fecha": "2026-11-08 14:52",
+   "tema": "Derecho Administrativo",
+   "id": "08fc3805a4ee"
   }
  ]
 }
