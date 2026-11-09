@@ -1,5 +1,5 @@
 {
- "indice": 10,
+ "indice": 11,
  "usadas": {
   "data/tema03_constitucional.csv": [
    "80f2828c15cd",
@@ -61,7 +61,8 @@
    "0c6110f327df",
    "77bf62e24bff",
    "eab5690f55bb",
-   "9705aca6e26c"
+   "9705aca6e26c",
+   "7f214b23776a"
   ],
   "data/tema10_topografia.csv": [
    "801ad1a971bf",
@@ -310,6 +311,11 @@
    "fecha": "2026-11-09 08:30",
    "tema": "Deontología profesional",
    "id": "2cb9770e1e6f"
+  },
+  {
+   "fecha": "2026-11-09 17:30",
+   "tema": "Derecho Penal",
+   "id": "7f214b23776a"
   }
  ]
 }
