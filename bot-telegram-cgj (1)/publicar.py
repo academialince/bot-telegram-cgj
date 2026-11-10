@@ -7,7 +7,7 @@ Uso:
   python publicar.py              publica la siguiente pregunta (necesita TELEGRAM_BOT_TOKEN y TELEGRAM_CHAT_ID)
   python publicar.py --prueba     muestra lo que publicaría, sin enviar nada ni tocar estado.json
 """
-import glob, html, json, os, random, sys, urllib.request, urllib.error
+import glob, html, json, os, random, sys, time, urllib.request, urllib.error
 from datetime import datetime, timezone
 import formato as F
 
@@ -107,25 +107,40 @@ def publicar(chat_id, tema, q, anonima, prueba=False):
     telegram("sendPoll", encuesta)
 
 
+def fuera_de_hora(config):
+    """En las ejecuciones programadas, no publica si GitHub ha retrasado mucho la ejecución."""
+    ventana = config.get("ventana_utc")
+    if os.environ.get("GITHUB_EVENT_NAME") != "schedule" or not ventana:
+        return False
+    hora = datetime.now(timezone.utc).hour
+    return not (ventana[0] <= hora < ventana[1])
+
+
 def main():
     prueba = "--prueba" in sys.argv
     config = cargar_json(RUTA_CONFIG, None)
+    if fuera_de_hora(config):
+        print("Ejecución muy retrasada por GitHub: no se publica para no enviar preguntas a deshoras.")
+        return
     estado = cargar_json(RUTA_ESTADO, {"indice": 0, "usadas": {}, "historial": []})
-    i, tema, q = elegir(config, estado)
     chat_id = os.environ.get("TELEGRAM_CHAT_ID", "")
     if not prueba and not chat_id:
         raise SystemExit("Falta la variable TELEGRAM_CHAT_ID.")
-    publicar(chat_id, tema, q, config.get("encuesta_anonima", True), prueba)
+    for _ in range(int(config.get("preguntas_por_publicacion", 1))):
+        i, tema, q = elegir(config, estado)
+        publicar(chat_id, tema, q, config.get("encuesta_anonima", True), prueba)
+        pid = F.id_pregunta(q)
+        estado["usadas"].setdefault(tema["archivo"], []).append(pid)
+        estado["indice"] = (i + 1) % len(config["rotacion"])
+        estado.setdefault("historial", []).append(
+            {"fecha": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M"), "tema": tema["nombre"], "id": pid})
+        print(f"Publicada: {tema['nombre']} · {q['enunciado'][:80]}")
+        if not prueba:
+            time.sleep(2)
     if prueba:
         return
-    pid = F.id_pregunta(q)
-    estado["usadas"].setdefault(tema["archivo"], []).append(pid)
-    estado["indice"] = (i + 1) % len(config["rotacion"])
-    estado.setdefault("historial", []).append(
-        {"fecha": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M"), "tema": tema["nombre"], "id": pid})
     estado["historial"] = estado["historial"][-60:]
     guardar_estado(estado)
-    print(f"Publicada: {tema['nombre']} · {q['enunciado'][:80]}")
 
 
 if __name__ == "__main__":

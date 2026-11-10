@@ -1,5 +1,7 @@
 {
   "encuesta_anonima": true,
+  "preguntas_por_publicacion": 2,
+  "ventana_utc": [8, 11],
   "rotacion": [
     {"archivo": "data/tema03_constitucional.csv",   "nombre": "Derecho Constitucional",           "emoji": "⚖️"},
     {"archivo": "data/tema01_derechos_humanos.csv", "nombre": "Derechos Humanos",                 "emoji": "🌍"},
