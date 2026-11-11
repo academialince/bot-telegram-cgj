@@ -1,5 +1,5 @@
 {
- "indice": 8,
+ "indice": 10,
  "usadas": {
   "data/tema03_constitucional.csv": [
    "80f2828c15cd",
@@ -54,14 +54,16 @@
    "2ba50cdec5ae",
    "caf7f1042b99",
    "aebb1abb297c",
-   "a0592259e701"
+   "a0592259e701",
+   "3a83102f9c40"
   ],
   "data/tema09_deontologia.csv": [
    "7d03e96dcd6e",
    "86ecbe5db5fe",
    "43cc68e2c736",
    "83e3a4ce10d9",
-   "2cb9770e1e6f"
+   "2cb9770e1e6f",
+   "a252929804fd"
   ],
   "data/tema05_penal.csv": [
    "0c6110f327df",
@@ -358,6 +360,16 @@
    "fecha": "2026-11-11 08:30",
    "tema": "Igualdad efectiva de mujeres y hombres",
    "id": "9d94d3c31bc0"
+  },
+  {
+   "fecha": "2026-11-11 17:30",
+   "tema": "Derecho Procesal Penal",
+   "id": "3a83102f9c40"
+  },
+  {
+   "fecha": "2026-11-11 17:30",
+   "tema": "Deontología profesional",
+   "id": "a252929804fd"
   }
  ]
 }
