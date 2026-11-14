@@ -1,5 +1,5 @@
 {
- "indice": 8,
+ "indice": 10,
  "usadas": {
   "data/tema03_constitucional.csv": [
    "80f2828c15cd",
@@ -61,7 +61,8 @@
    "caf7f1042b99",
    "aebb1abb297c",
    "a0592259e701",
-   "3a83102f9c40"
+   "3a83102f9c40",
+   "599b7fca3882"
   ],
   "data/tema09_deontologia.csv": [
    "7d03e96dcd6e",
@@ -69,7 +70,8 @@
    "43cc68e2c736",
    "83e3a4ce10d9",
    "2cb9770e1e6f",
-   "a252929804fd"
+   "a252929804fd",
+   "220358a7b57a"
   ],
   "data/tema05_penal.csv": [
    "0c6110f327df",
@@ -89,16 +91,6 @@
   ]
  },
  "historial": [
-  {
-   "fecha": "2026-10-29 17:30",
-   "tema": "Derecho Procesal Penal",
-   "id": "0ddf4cbdcee9"
-  },
-  {
-   "fecha": "2026-10-29 23:05",
-   "tema": "Deontología profesional",
-   "id": "7d03e96dcd6e"
-  },
   {
    "fecha": "2026-10-30 08:30",
    "tema": "Derecho Penal",
@@ -388,6 +380,16 @@
    "fecha": "2026-11-13 17:30",
    "tema": "Igualdad efectiva de mujeres y hombres",
    "id": "5a81f9f7901e"
+  },
+  {
+   "fecha": "2026-11-14 08:30",
+   "tema": "Derecho Procesal Penal",
+   "id": "599b7fca3882"
+  },
+  {
+   "fecha": "2026-11-14 08:30",
+   "tema": "Deontología profesional",
+   "id": "220358a7b57a"
   }
  ]
 }
