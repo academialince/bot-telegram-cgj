@@ -1,5 +1,5 @@
 {
- "indice": 0,
+ "indice": 2,
  "usadas": {
   "data/tema03_constitucional.csv": [
    "80f2828c15cd",
@@ -9,7 +9,8 @@
    "16f79dd6ae24",
    "6253de6b2923",
    "70c65ee9bf70",
-   "83cd5971d762"
+   "83cd5971d762",
+   "d32971f82bff"
   ],
   "data/tema01_derechos_humanos.csv": [
    "fd78b4243e1e",
@@ -19,7 +20,8 @@
    "80d8307a335f",
    "c3ff69ead792",
    "b17cfaefda3d",
-   "c4f4281d3461"
+   "c4f4281d3461",
+   "580363aeaf86"
   ],
   "data/tema08_guardia_civil.csv": [
    "0bf7b3edd1ba",
@@ -103,16 +105,6 @@
   ]
  },
  "historial": [
-  {
-   "fecha": "2026-11-02 08:30",
-   "tema": "Derecho Constitucional",
-   "id": "6dfac0835f47"
-  },
-  {
-   "fecha": "2026-11-02 17:30",
-   "tema": "Derechos Humanos",
-   "id": "9d1063133b24"
-  },
   {
    "fecha": "2026-11-02 18:00",
    "tema": "Fuerzas y Cuerpos de Seguridad. Guardia Civil",
@@ -402,6 +394,16 @@
    "fecha": "2026-11-17 08:30",
    "tema": "Topografía",
    "id": "7e55fb8e6b92"
+  },
+  {
+   "fecha": "2026-11-17 17:30",
+   "tema": "Derecho Constitucional",
+   "id": "d32971f82bff"
+  },
+  {
+   "fecha": "2026-11-17 17:30",
+   "tema": "Derechos Humanos",
+   "id": "580363aeaf86"
   }
  ]
 }
