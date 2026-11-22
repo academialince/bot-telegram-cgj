@@ -1,5 +1,5 @@
 {
- "indice": 10,
+ "indice": 0,
  "usadas": {
   "data/tema03_constitucional.csv": [
    "80f2828c15cd",
@@ -106,7 +106,8 @@
    "b239f12efe56",
    "4eb66fa2dd06",
    "576243775995",
-   "ede024999745"
+   "ede024999745",
+   "5906084486f6"
   ],
   "data/tema10_topografia.csv": [
    "801ad1a971bf",
@@ -117,20 +118,11 @@
    "3fa1d4248261",
    "5beea2b39ae9",
    "7e55fb8e6b92",
-   "44ba16013056"
+   "44ba16013056",
+   "72b8f9e1afeb"
   ]
  },
  "historial": [
-  {
-   "fecha": "2026-11-06 17:30",
-   "tema": "Derecho Penal",
-   "id": "9705aca6e26c"
-  },
-  {
-   "fecha": "2026-11-06 23:38",
-   "tema": "Topografía",
-   "id": "82d4708cc59b"
-  },
   {
    "fecha": "2026-11-07 08:30",
    "tema": "Derecho Constitucional",
@@ -420,6 +412,16 @@
    "fecha": "2026-11-21 17:30",
    "tema": "Deontología profesional",
    "id": "3be940471a0e"
+  },
+  {
+   "fecha": "2026-11-22 08:30",
+   "tema": "Derecho Penal",
+   "id": "5906084486f6"
+  },
+  {
+   "fecha": "2026-11-22 08:30",
+   "tema": "Topografía",
+   "id": "72b8f9e1afeb"
   }
  ]
 }
