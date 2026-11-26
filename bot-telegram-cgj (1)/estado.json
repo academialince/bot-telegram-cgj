@@ -1,5 +1,5 @@
 {
- "indice": 6,
+ "indice": 8,
  "usadas": {
   "data/tema03_constitucional.csv": [
    "80f2828c15cd",
@@ -68,7 +68,8 @@
    "bc39d773801d",
    "b1bf5e02f0cb",
    "16ec94bbd484",
-   "8fa2a6fd21b4"
+   "8fa2a6fd21b4",
+   "e4343c7536f4"
   ],
   "data/tema02_igualdad.csv": [
    "484c89cd1053",
@@ -81,7 +82,8 @@
    "cdd1a3eccabe",
    "f50cf361831c",
    "f21bba433f4e",
-   "83daa8a0cea6"
+   "83daa8a0cea6",
+   "8ad4c6754ba1"
   ],
   "data/tema06_procesal_penal.csv": [
    "0ddf4cbdcee9",
@@ -137,16 +139,6 @@
   ]
  },
  "historial": [
-  {
-   "fecha": "2026-11-11 08:30",
-   "tema": "Derecho Administrativo",
-   "id": "7ec879096aa8"
-  },
-  {
-   "fecha": "2026-11-11 08:30",
-   "tema": "Igualdad efectiva de mujeres y hombres",
-   "id": "9d94d3c31bc0"
-  },
   {
    "fecha": "2026-11-11 17:30",
    "tema": "Derecho Procesal Penal",
@@ -436,6 +428,16 @@
    "fecha": "2026-11-25 17:30",
    "tema": "Derecho Civil",
    "id": "8ee149d09274"
+  },
+  {
+   "fecha": "2026-11-26 08:30",
+   "tema": "Derecho Administrativo",
+   "id": "e4343c7536f4"
+  },
+  {
+   "fecha": "2026-11-26 08:30",
+   "tema": "Igualdad efectiva de mujeres y hombres",
+   "id": "8ad4c6754ba1"
   }
  ]
 }
