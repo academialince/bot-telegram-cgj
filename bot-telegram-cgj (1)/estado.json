@@ -1,5 +1,5 @@
 {
- "indice": 2,
+ "indice": 6,
  "usadas": {
   "data/tema03_constitucional.csv": [
    "80f2828c15cd",
@@ -43,7 +43,8 @@
    "5b4b012c9660",
    "d59c3cacb6e3",
    "95c30961d9e3",
-   "ca6dead2ef3c"
+   "ca6dead2ef3c",
+   "0034bf107706"
   ],
   "data/tema04_civil.csv": [
    "a9dbdac0cc0c",
@@ -57,7 +58,8 @@
    "8ff1ac0ef30f",
    "dcb8b680fd31",
    "371d8910c46f",
-   "8ee149d09274"
+   "8ee149d09274",
+   "18385f507480"
   ],
   "data/tema07_administrativo.csv": [
    "6dbcf095c511",
@@ -145,16 +147,6 @@
   ]
  },
  "historial": [
-  {
-   "fecha": "2026-11-13 08:30",
-   "tema": "Fuerzas y Cuerpos de Seguridad. Guardia Civil",
-   "id": "fc0fb50351d3"
-  },
-  {
-   "fecha": "2026-11-13 08:30",
-   "tema": "Derecho Civil",
-   "id": "ee5e7f8eb509"
-  },
   {
    "fecha": "2026-11-13 17:30",
    "tema": "Derecho Administrativo",
@@ -444,6 +436,16 @@
    "fecha": "2026-11-27 17:30",
    "tema": "Derechos Humanos",
    "id": "29a337d4f5ad"
+  },
+  {
+   "fecha": "2026-11-28 08:30",
+   "tema": "Fuerzas y Cuerpos de Seguridad. Guardia Civil",
+   "id": "0034bf107706"
+  },
+  {
+   "fecha": "2026-11-28 08:30",
+   "tema": "Derecho Civil",
+   "id": "18385f507480"
   }
  ]
 }
